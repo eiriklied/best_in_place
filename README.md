@@ -25,6 +25,7 @@ The editor works by PUTting the updated value to the server and GETting the upda
 - Sanitize HTML and trim spaces of user's input on user's choice
 - Displays server-side **validation** errors
 - Allows external activator
+- Allows optional, configurable OK and Cancel buttons for inputs and textareas
 - ESC key destroys changes (requires user confirmation)
 - Autogrowing textarea
 - Helper for generating the best_in_place field only if a condition is satisfied
@@ -44,18 +45,21 @@ Params:
 
 Options:
 
-- **:type** It can be only [:input, :textarea, :select, :checkbox, :date] or if undefined it defaults to :input.
+- **:type** It can be only [:input, :textarea, :select, :checkbox, :date (>= 1.0.4)] or if undefined it defaults to :input.
 - **:collection**: In case you are using the :select type then you must specify the collection of values it takes. In case you are
   using the :checkbox type you can specify the two values it can take, or otherwise they will default to Yes and No.
 - **:path**: URL to which the updating action will be sent. If not defined it defaults to the :object path.
 - **:nil**: The nil param defines the content displayed in case no value is defined for that field. It can be something like "click me to edit".
   If not defined it will show *"-"*.
 - **:activator**: Is the DOM object that can activate the field. If not defined the user will making editable by clicking on it.
+- **:ok_button**: (Inputs and textareas only) If set to a string, then an OK button will be shown with the string as its label, replacing save on blur.
+- **:cancel_button**: (Inputs and textareas only) If set to a string, then a Cancel button will be shown with the string as its label.
 - **:sanitize**: True by default. If set to false the input/textarea will accept html tags.
 - **:html_attrs**: Hash of html arguments, such as maxlength, default-value etc.
 - **:inner_class**: Class that is set to the rendered form.
 - **:display_as**: A model method which will be called in order to display
   this field.
+- **:object_name**: Used for overriding the default params key used for the object (the data-object attribute). Useful for e.g. STI scenarios where best_in_place should post to a common controller for different models.
 
 ###best_in_place_if
 **best_in_place_if condition, object, field, OPTIONS**
@@ -96,6 +100,8 @@ Examples (code in the views):
 ### Textarea
 
     <%= best_in_place @user, :description, :type => :textarea %>
+
+    <%= best_in_place @user, :favorite_books, :type => :textarea, :ok_button => 'Save', :cancel_button => 'Cancel' %>
 
 ### Select
 
@@ -393,6 +399,13 @@ Fork the project on [github](https://github.com/bernat/best_in_place 'bernat / b
 - v.1.0.3 replace apostrophes in collection with corresponding HTML entity,
   thanks @taavo. Implemented `:display_as` option and adding
   `respond_with_bip` to be used in the controller.
+- v.1.0.4 Depend on ActiveModel instead of ActiveRecord (thanks,
+  @skinnyfit). Added date type (thanks @taavo). Added new feature:
+display_with.
+- v.1.0.5 Fix a bug involving quotes (thanks @ygoldshtrakh). Minor fixes
+  by @bfalling. Add object name option (thanks @nicholassm). Check
+version of Rails before booting. Minor fixes.
+- v.1.0.6 Fix issue with display_with. Update test_app to 3.2.
 
 ###Rails 3.0 branch only
 - v.0.2.0 Added RSpec and Capybara setup, and some tests. Fix countries map syntax, Allowing href and some other HTML attributes. Adding Travis CI too. Added the best_in_place_if option. Added ajax:success trigger, thanks to @indrekj.

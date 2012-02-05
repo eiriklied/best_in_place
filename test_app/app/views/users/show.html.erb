@@ -13,7 +13,7 @@
     <tr>
       <td>Last Name</td>
       <td id="last_name">
-        <%= best_in_place @user, :last_name, :nil => "Nothing to show", :path => test_respond_with_user_path(@user) %>
+        <%= best_in_place @user, :last_name, :nil => "Nothing to show" %>
       </td>
     </tr>
     <tr>
@@ -53,9 +53,31 @@
       </td>
     </tr>
     <tr>
+      <td>Favorite color</td>
+      <td id="favorite_color">
+        <%- opts = { :ok_button => 'Do it!', :cancel_button => 'Nope' } %>
+        <%- opts.delete(:ok_button) if params[:suppress_ok_button] %>
+        <%= best_in_place @user, :favorite_color, opts %>
+      </td>
+    </tr>
+    <tr>
+      <td>Favorite books</td>
+      <td id="favorite_books">
+        <%- opts = { :type => :textarea, :ok_button => 'Save', :cancel_button => 'Cancel' } %>
+        <%- opts.delete(:ok_button) if params[:suppress_ok_button] %>
+        <%= best_in_place @user, :favorite_books, opts %>
+      </td>
+    </tr>
+    <tr>
       <td>User description</td>
       <td id="description">
         <%= best_in_place @user, :description, :display_as => :markdown_desc, :type => :textarea, :sanitize => false %>
+      </td>
+    </tr>
+    <tr>
+      <td>Simple-formatted user description</td>
+      <td id="dw_description">
+        <%= best_in_place @user, :description, :display_with => :simple_format, :type => :textarea %>
       </td>
     </tr>
     <tr>
