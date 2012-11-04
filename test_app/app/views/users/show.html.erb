@@ -17,6 +17,12 @@
       </td>
     </tr>
     <tr>
+      <td>Height</td>
+      <td id="height">
+        <%= best_in_place @user, :height, :type => :select, :collection => height_collection.zip(height_collection), :sanitize => false %>
+      </td>
+    </tr>
+    <tr>
       <td>Email</td>
       <td id="email">
         <%= best_in_place @user, :email %>
@@ -90,6 +96,12 @@
       <td>Money with proc</td>
       <td id="money_proc">
         <%= best_in_place @user, :money_proc, :display_with => lambda{ |v| number_to_currency(v) } %>
+      </td>
+    </tr>
+    <tr>
+      <td>Money with custom helper</td>
+      <td id="money_custom">
+        <%= best_in_place @user, :money_custom, :display_with => lambda { |x| bb(x) } %>
       </td>
     </tr>
   </table>
